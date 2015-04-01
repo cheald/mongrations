@@ -1,9 +1,8 @@
 namespace :mongo do
-  @path = File.join(Rails.root, "db", "mongrations")
-
   desc "Migrate the database through scripts in db/mongrations. Target specific version with VERSION=x."
   task :mongrate => :environment do
-    MongoMapper::Migrator.migrate(@path, ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
+    path = File.join(Rails.root, "db", "mongrations")
+    MongoMapper::Migrator.migrate(path, ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
   end
 
   namespace :mongrate do
@@ -20,22 +19,25 @@ namespace :mongo do
 
     desc 'Runs the "up" for a given mongration VERSION.'
     task :up => :environment do
+      path = File.join(Rails.root, "db", "mongrations")
       version = ENV["VERSION"] ? ENV["VERSION"].to_i : nil
       raise "VERSION is required" unless version
-      MongoMapper::Migrator.run(:up, @path, version)
+      MongoMapper::Migrator.run(:up, path, version)
     end
 
     desc 'Runs the "down" for a given mongration VERSION.'
     task :down => :environment do
+      path = File.join(Rails.root, "db", "mongrations")
       version = ENV["VERSION"] ? ENV["VERSION"].to_i : nil
       raise "VERSION is required" unless version
-      MongoMapper::Migrator.run(:down, @path, version)
+      MongoMapper::Migrator.run(:down, path, version)
     end
 
     desc 'Rolls the schema back to the previous version. Specify the number of steps with STEP=n'
     task :rollback => :environment do
+      path = File.join(Rails.root, "db", "mongrations")
       step = ENV['STEP'] ? ENV['STEP'].to_i : 1
-      MongoMapper::Migrator.rollback(@path, step)
-    end    
+      MongoMapper::Migrator.rollback(path, step)
+    end
   end
 end
