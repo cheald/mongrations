@@ -12,7 +12,7 @@ namespace :mongo do
         Rake::Task["mongo:mongrate:down"].invoke
         Rake::Task["mongo:mongrate:up"].invoke
       else
-        Rake::Task["mongo:mongo_rollback"].invoke
+        Rake::Task["mongo:mongrate:rollback"].invoke
         Rake::Task["mongo:mongrate"].invoke
       end
     end
@@ -38,6 +38,11 @@ namespace :mongo do
       path = File.join(Rails.root, "db", "mongrations")
       step = ENV['STEP'] ? ENV['STEP'].to_i : 1
       MongoMapper::Migrator.rollback(path, step)
+    end
+
+    desc 'Show the current version of the mongrations'
+    task :version => :environment do
+      puts MongoMapper::Migrator.current_version
     end
   end
 end

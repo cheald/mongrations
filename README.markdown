@@ -34,12 +34,13 @@ In both cases, open your Rakefile, and add:
 
 `require 'mongrations/tasks'`
 
+
 Example
 =======
 
 To generate a mongration, just do:
 
-`script/generate mongration whatever_you_want_your_mongration_to_be`
+`rails generate mongration whatever_you_want_your_mongration_to_be`
 
 To run it, do
 
@@ -61,6 +62,11 @@ with MongoMapper
 Original adaptation by terrbear.
 
 Fixed to work with recent versions of MongoMapper and released as a gem by Chris Heald.
+=======
+You need Mongo and MongoMapper for this to be of any use.
+This is tested with rails 3.it 'll not support the older version .
+please use https://github.com/terrbear/mongrations for rails older version.
+
 
 License
 =======
